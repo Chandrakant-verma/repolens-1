@@ -1,17 +1,10 @@
-class ApiResponse {
-    constructor(success, message, data = null) {
-        this.success = success;
-        this.message = message;
-        this.data = data;
-    }
-
-    static success(message, data = null) {
-        return new ApiResponse(true, message, data);
-    }
-
-    static error(message) {
-        return new ApiResponse(false, message);
-    }
+/**
+ * Consistent success envelope: { success, message, data }
+ */
+export class ApiResponse {
+  constructor(message = "Success", data = null) {
+    this.success = true;
+    this.message = message;
+    this.data = data;
+  }
 }
-
-export default ApiResponse;

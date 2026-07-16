@@ -1,34 +1,32 @@
 {
-  "name": "server",
+  "name": "repolens-server",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "dev": "nodemon src/server.js",
-    "start": "node src/server.js"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "description": "RepoLens backend - clone, analyze, and chat with GitHub repositories",
   "type": "module",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "nodemon src/server.js"
+  },
   "dependencies": {
-    "@google/genai": "^2.10.0",
-    "bcrypt": "^6.0.0",
-    "cookie-parser": "^1.4.7",
-    "cors": "^2.8.6",
-    "dotenv": "^17.4.2",
-    "express": "^5.2.1",
-    "express-validator": "^7.3.2",
-    "fs-extra": "^11.3.6",
-    "helmet": "^8.2.0",
-    "jsonwebtoken": "^9.0.3",
-    "mongoose": "^9.7.4",
-    "morgan": "^1.11.0",
-    "multer": "^2.2.0",
-    "simple-git": "^3.36.0",
-    "validator": "^13.15.35"
+    "@google/genai": "^0.3.0",
+    "bcrypt": "^5.1.1",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^5.0.1",
+    "express-validator": "^7.2.0",
+    "helmet": "^7.2.0",
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^8.7.0",
+    "morgan": "^1.10.0",
+    "simple-git": "^3.27.0"
+  },
+  "nodemonConfig": {
+    "watch": ["src"],
+    "ext": "js,mjs,cjs,json",
+    "ignore": ["clones/**", "clones/*", "node_modules/**"]
   },
   "devDependencies": {
-    "nodemon": "^3.1.14"
+    "nodemon": "^3.1.7"
   }
 }

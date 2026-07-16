@@ -1,36 +1,34 @@
 import express from "express";
 import cors from "cors";
-import authRoutes from "../src/features/auth/auth.routes.js";
-import errorMiddleware from "../src/middlewares/error.middleware.js";
-import repositoryRoutes from "./features/repository/repository.routes.js";
-import aiRoutes from "./features/ai/ai.routes.js";
+import morgan from "morgan";
+import helmet from "helmet";
+
+import authRoutes from "./routes/authRoutes.js";
+import repositoryRoutes from "./routes/repositoryRoutes.js";
+import aiRoutes from "./routes/aiRoutes.js";
+import { errorHandler, notFoundHandler } from "./middleware/errorHandler.js";
 
 const app = express();
 
+app.use(helmet());
 app.use(
-    cors({
-        origin: [
-            "http://localhost:5173",
-            process.env.CLIENT_URL,
-        ],
-        credentials: true,
-    })
+  cors({
+    origin: process.env.CLIENT_URL || "http://localhost:5173",
+    credentials: true,
+  })
 );
+app.use(express.json({ limit: "1mb" }));
+app.use(morgan(process.env.NODE_ENV === "production" ? "combined" : "dev"));
 
-app.use(express.json());
+app.get("/api/health", (_req, res) => {
+  res.status(200).json({ success: true, message: "RepoLens API is running" });
+});
 
 app.use("/api/auth", authRoutes);
-
 app.use("/api/repositories", repositoryRoutes);
 app.use("/api/ai", aiRoutes);
 
-app.get("/api/health", (req, res) => {
-    res.json({
-        success: true,
-        message: "RepoLens API Running 🚀",
-    });
-});
-
-app.use(errorMiddleware);
+app.use(notFoundHandler);
+app.use(errorHandler);
 
 export default app;
