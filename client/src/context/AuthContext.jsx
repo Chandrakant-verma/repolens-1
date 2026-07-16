@@ -1,118 +1,74 @@
-import { createContext, useContext, useEffect, useState } from "react";
+import { createContext, useContext, useEffect, useState, useCallback } from "react";
+import { api } from "../api/axios.js";
 
-import authService from "../services/auth.service";
+const AuthContext = createContext(null);
 
-import {
-    saveToken,
-    getToken,
-    removeToken,
-} from "../utils/token";
+const TOKEN_KEY = "repolens_token";
 
-const AuthContext = createContext();
+export function AuthProvider({ children }) {
+  const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true);
 
-export const AuthProvider = ({ children }) => {
+  // On mount, if a token is stored, verify it against /auth/me to
+  // restore the session. Until this resolves, `loading` stays true so
+  // ProtectedRoute doesn't prematurely bounce a logged-in user.
+  useEffect(() => {
+    const token = localStorage.getItem(TOKEN_KEY);
 
-    const [user, setUser] = useState(null);
+    if (!token) {
+      setLoading(false);
+      return;
+    }
 
-    const [loading, setLoading] = useState(true);
-
-    const isAuthenticated = !!user;
-
-    //--------------------------------------
-
-    const register = async (data) => {
-
-        const response = await authService.register(data);
-
-        saveToken(response.data.token);
-
-        setUser(response.data.user);
-
-        return response;
-    };
-
-    //--------------------------------------
-
-    const login = async (data) => {
-
-        const response = await authService.login(data);
-
-        saveToken(response.data.token);
-
-        setUser(response.data.user);
-
-        return response;
-    };
-
-    //--------------------------------------
-
-    const logout = () => {
-
-        removeToken();
-
+    api
+      .get("/auth/me")
+      .then((res) => {
+        setUser(res.data.data.user);
+      })
+      .catch(() => {
+        localStorage.removeItem(TOKEN_KEY);
         setUser(null);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+  }, []);
 
-    };
+  const login = useCallback(async (email, password) => {
+    const res = await api.post("/auth/login", { email, password });
+    const { token, user: loggedInUser } = res.data.data;
+    localStorage.setItem(TOKEN_KEY, token);
+    setUser(loggedInUser);
+    return loggedInUser;
+  }, []);
 
-    //--------------------------------------
+  const register = useCallback(async (name, email, password) => {
+    const res = await api.post("/auth/register", { name, email, password });
+    const { token, user: registeredUser } = res.data.data;
+    localStorage.setItem(TOKEN_KEY, token);
+    setUser(registeredUser);
+    return registeredUser;
+  }, []);
 
-    const loadUser = async () => {
+  const logout = useCallback(() => {
+    localStorage.removeItem(TOKEN_KEY);
+    setUser(null);
+  }, []);
 
-        const token = getToken();
+  const value = {
+    user,
+    loading,
+    login,
+    register,
+    logout,
+    isAuthenticated: Boolean(user),
+  };
 
-        if (!token) {
+  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
+}
 
-            setLoading(false);
-
-            return;
-
-        }
-
-        try {
-
-            const response = await authService.getCurrentUser();
-
-            setUser(response.data);
-
-        } catch {
-
-            removeToken();
-
-            setUser(null);
-
-        } finally {
-
-            setLoading(false);
-
-        }
-    };
-
-    //--------------------------------------
-
-    useEffect(() => {
-
-        loadUser();
-
-    }, []);
-
-    //--------------------------------------
-
-    return (
-        <AuthContext.Provider
-            value={{
-                user,
-                loading,
-                register,
-                login,
-                logout,
-                isAuthenticated,
-            }}
-        >
-            {children}
-        </AuthContext.Provider>
-    );
-};
-
-export const useAuthContext = () => useContext(AuthContext);
-
-export default AuthContext;
+export function useAuth() {
+  const ctx = useContext(AuthContext);
+  if (!ctx) throw new Error("useAuth must be used within an AuthProvider");
+  return ctx;
+}
