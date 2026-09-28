@@ -1,21 +1,15 @@
-FROM node:20-alpine AS frontend-builder
-
-COPY ./client /app
-
-WORKDIR /app
-
-RUN npm install
-
-RUN npm run build
-
 FROM node:20-alpine
 
-COPY ./server /app
-
 WORKDIR /app
 
-RUN npm install
+RUN apk add --no-cache git
 
-COPY --from=frontend-builder /app/dist /app/public
+COPY server/package*.json ./
+
+RUN npm ci --omit=dev
+
+COPY server/ .
+
+EXPOSE 5000
 
 CMD ["node", "src/server.js"]
