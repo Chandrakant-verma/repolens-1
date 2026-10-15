@@ -3,6 +3,13 @@
 Paste a public GitHub repo URL, get it cloned and analyzed (file count, folder
 count, languages used), and chat with an AI about that repository's code.
 
+## Memory and Cpu utilization test using 250000 requests in 500 seconds
+   <img width="1878" height="720" alt="Screenshot (1919)" src="https://github.com/user-attachments/assets/32768868-d066-43db-bf59-ec5e7cbb3a20" />
+
+
+## JMeter results using 250000 requests: 25000 uesrs and loop count 10
+   <img width="1920" height="545" alt="Screenshot (1920)" src="https://github.com/user-attachments/assets/83f41ee8-b929-4757-8d07-3ef130d3e5f5" />
+
 ## Stack
 
 - **Backend:** Node.js, Express 5, MongoDB/Mongoose, JWT auth, `simple-git`,
@@ -63,12 +70,7 @@ URL (e.g. `https://github.com/expressjs/express`) into the dashboard.
   URL fails fast instead of hanging the request.
 # repolens-1
 
-## Memory and Cpu utilization on 250000 requests in 500 seconds
-   <img width="1878" height="720" alt="Screenshot (1919)" src="https://github.com/user-attachments/assets/32768868-d066-43db-bf59-ec5e7cbb3a20" />
 
-
-## JMeter results for 250000 requests: 25000 uesrs and loop count 10
-   <img width="1920" height="545" alt="Screenshot (1920)" src="https://github.com/user-attachments/assets/83f41ee8-b929-4757-8d07-3ef130d3e5f5" />
 
 
 
