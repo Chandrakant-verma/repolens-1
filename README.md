@@ -44,7 +44,7 @@ npm run dev             # starts on http://localhost:5173
 Open http://localhost:5173, register an account, and paste a public GitHub
 URL (e.g. `https://github.com/expressjs/express`) into the dashboard.
 
-## Notes on behavior
+## Behavior
 
 - `GET /api/repositories` always re-clones and re-scans every repo the user
   owns before responding, so the dashboard numbers are never stale. If one
@@ -61,3 +61,11 @@ URL (e.g. `https://github.com/expressjs/express`) into the dashboard.
   `GIT_TERMINAL_PROMPT=0`, and have a 30s timeout, so a private or mistyped
   URL fails fast instead of hanging the request.
 # repolens-1
+
+## Memory and Cpu utilization on 250000 requests in 500 seconds
+   <img width="1920" height="1080" alt="Screenshot (1919)" src="https://github.com/user-attachments/assets/baa823e1-dcc7-4eb4-bac6-fb64c7ddc39d" />
+
+## JMeter results for 250000 requests: 25000 uesrs and loop count 10
+   <img width="1920" height="1080" alt="Screenshot (1920)" src="https://github.com/user-attachments/assets/79d2780a-f2c9-415a-934d-660715066f08" />
+
+
