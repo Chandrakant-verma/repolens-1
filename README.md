@@ -63,9 +63,11 @@ URL (e.g. `https://github.com/expressjs/express`) into the dashboard.
 # repolens-1
 
 ## Memory and Cpu utilization on 250000 requests in 500 seconds
-   <img width="1920" height="1080" alt="Screenshot (1919)" src="https://github.com/user-attachments/assets/baa823e1-dcc7-4eb4-bac6-fb64c7ddc39d" />
+   <img width="1878" height="720" alt="Screenshot (1919)" src="https://github.com/user-attachments/assets/32768868-d066-43db-bf59-ec5e7cbb3a20" />
+
 
 ## JMeter results for 250000 requests: 25000 uesrs and loop count 10
-   <img width="1920" height="1080" alt="Screenshot (1920)" src="https://github.com/user-attachments/assets/79d2780a-f2c9-415a-934d-660715066f08" />
+   <img width="1920" height="545" alt="Screenshot (1920)" src="https://github.com/user-attachments/assets/83f41ee8-b929-4757-8d07-3ef130d3e5f5" />
+
 
 
