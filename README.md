@@ -9,6 +9,7 @@ count, languages used), and chat with an AI about that repository's code.
   Gemini (`@google/genai`)
 - **Frontend:** React + Vite, Tailwind CSS, React Router, Axios,
   react-toastify
+- **Deployment:** AWS ECS farget, CloudFront, ECR for image storation, DOCKER for containerizatoin, frontend on render
 
 ## Project layout
 
@@ -24,9 +25,8 @@ repolens/
 
 ```bash
 cd server
-cp .env.example .env   # fill in MONGODB_URI, JWT_SECRET, GEMINI_API_KEY, etc.
 npm install
-npm run dev             # starts on http://localhost:5000
+npm run dev   
 ```
 
 You need a running MongoDB instance (local or Atlas) and a Gemini API key
