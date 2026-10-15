@@ -9,7 +9,8 @@ count, languages used), and chat with an AI about that repository's code.
   Gemini (`@google/genai`)
 - **Frontend:** React + Vite, Tailwind CSS, React Router, Axios,
   react-toastify
-- **Deployment:** AWS ECS farget, CloudFront, ECR for image storation, DOCKER for containerizatoin, frontend on render
+- **Deployment:** AWS ECS farget, CloudFront, ECR for image storation, DOCKER for containerizatoin, frontend on render, AWS application load balancer for traffic distribution
+  Configured CPU-based auto-scaling with a 65% target-tracking threshold and a scaling range of 1–3 ECS tasks. Conducted load testing with Apache JMeter at up to 25,000 virtual threads and 250,000 health endpoint samples, observing approximately 497 requests/second, 44 ms average response time, and 88 ms P95 latency. Monitored ECS CPU and memory utilization using AWS CloudWatch; observed CPU utilization peaking at 70.79%, memory utilization at 7.37%, and the service scaling from one to two healthy tasks during the test.
 
 ## Project layout
 
